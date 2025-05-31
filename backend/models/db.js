@@ -1,22 +1,29 @@
 import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'LemmeIn@',
-  database: 'ecommerce',
+  host: process.env.DB_HOST,        // Not localhost on Render!
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 
-// Try a test connection and log the result
-try {
-  const connection = await pool.getConnection();
-  console.log(' MySQL connected successfully!');
-  connection.release(); // Always release the connection back to the pool
-} catch (err) {
-  console.error(' MySQL connection failed:', err.message);
+// Test connection inside an async function or on demand
+async function testConnection() {
+  try {
+    const connection = await pool.getConnection();
+    console.log('MySQL connected successfully!');
+    connection.release();
+  } catch (err) {
+    console.error('MySQL connection failed:', err.message);
+  }
 }
+
+testConnection();
 
 export default pool;
