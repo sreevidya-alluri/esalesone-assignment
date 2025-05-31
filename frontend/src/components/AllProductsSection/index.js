@@ -60,7 +60,7 @@ const AllProductsSection = () => {
     if (searchInput) params.append('title_search', searchInput)
     if (activeRatingId) params.append('rating', activeRatingId)
 
-    const apiUrl = `http://localhost:8000/api/products?${params.toString()}`
+    const apiUrl = `https://esalesone-assignment-production-3aef.up.railway.app/api/products?${params.toString()}`
     console.log(apiUrl)
   
 

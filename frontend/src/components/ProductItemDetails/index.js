@@ -19,7 +19,7 @@ const ProductItemDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/products/${id}`)
+        const response = await fetch(`https://esalesone-assignment-production-3aef.up.railway.app/api/products/${id}`)
         if (!response.ok) throw new Error('Failed to fetch product')
         const data = await response.json()
         setProduct({
