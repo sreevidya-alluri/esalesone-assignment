@@ -1,29 +1,25 @@
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
+import mysql from 'mysql2/promise'
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,        // Not localhost on Render!
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE,
+  port: parseInt(process.env.MYSQLPORT, 10) || 3306,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-});
+})
 
-// Test connection inside an async function or on demand
-async function testConnection() {
-  try {
-    const connection = await pool.getConnection();
-    console.log('MySQL connected successfully!');
-    connection.release();
-  } catch (err) {
-    console.error('MySQL connection failed:', err.message);
-  }
+try {
+  const connection = await pool.getConnection();
+  console.log('MySQL connected successfully to PlanetScale!');
+  connection.release();
+} catch (err) {
+  console.error('MySQL connection failed:', err.message);
 }
 
-testConnection();
-
-export default pool;
+export default pool
