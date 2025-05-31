@@ -9,10 +9,7 @@ const ProductCard = props => {
 
   const navigate = useNavigate()
 
-  useEffect(() => {
-    // For debugging — remove in production
-   // console.log(`/products/${id}`)
-  }, [id])
+ 
 
   const onClickItem = () => {
     navigate(`/products/${id}`)
